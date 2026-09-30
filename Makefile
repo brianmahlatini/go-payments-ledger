@@ -1,0 +1,13 @@
+.PHONY: test race bench lint run build
+test:
+	go test ./...
+race:
+	go test -race -count=1 ./...
+bench:
+	go test -run=^$$ -bench=. -benchmem ./...
+lint:
+	gofmt -l . && go vet ./...
+build:
+	CGO_ENABLED=0 go build -trimpath -o bin/ledgerd ./cmd/ledgerd
+run:
+	go run ./cmd/ledgerd
